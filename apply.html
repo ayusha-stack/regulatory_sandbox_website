@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apply Now — NRB Regulatory Sandbox</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .apply-form-section {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 40px;
+    margin-top: 32px;
+  }
+  .form-group { margin-bottom: 22px; }
+  .form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 7px;
+    letter-spacing: 0.2px;
+  }
+  .form-group label span { color: var(--crimson); }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    padding: 11px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--dark);
+    background: var(--white);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--crimson);
+    box-shadow: 0 0 0 3px rgba(139,26,26,0.08);
+  }
+  .form-group textarea { resize: vertical; min-height: 110px; }
+  .form-group select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23777' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .form-section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--crimson);
+    margin: 36px 0 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--crimson);
+  }
+  .form-section-title:first-child { margin-top: 0; }
+  .upload-box {
+    border: 2px dashed var(--border);
+    border-radius: 6px;
+    padding: 24px;
+    text-align: center;
+    background: var(--light);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .upload-box:hover { border-color: var(--crimson); background: var(--crimson-pale); }
+  .upload-box .upload-icon { font-size: 28px; margin-bottom: 8px; }
+  .upload-box p { font-size: 13px; color: var(--mid); }
+  .upload-box strong { color: var(--crimson); }
+  .upload-box input[type="file"] { display: none; }
+  .checkbox-group { display: flex; align-items: flex-start; gap: 10px; }
+  .checkbox-group input[type="checkbox"] { margin-top: 3px; accent-color: var(--crimson); width: 16px; height: 16px; flex-shrink: 0; }
+  .checkbox-group label { font-size: 13.5px; color: var(--mid); line-height: 1.6; font-weight: 400; }
+  .form-note { font-size: 12.5px; color: var(--light-text); margin-top: 6px; font-style: italic; }
+  .status-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #e8f5e9; color: #2e7d32;
+    padding: 10px 18px; border-radius: 4px;
+    font-size: 13px; font-weight: 600;
+    border: 1px solid #c8e6c9;
+  }
+  .status-badge.closed { background: #fff3e0; color: #e65100; border-color: #ffe0b2; }
+  .step-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 40px;
+    counter-reset: step-count;
+  }
+  .step-dot {
+    display: flex; align-items: center; gap: 0; flex: 1;
+    counter-increment: step-count;
+  }
+  .step-dot:last-child { flex: none; }
+  .step-dot-inner {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--border);
+    color: var(--light-text);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 14px;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .step-dot.active .step-dot-inner { background: var(--crimson); color: #fff; }
+  .step-dot.done .step-dot-inner { background: #2e7d32; color: #fff; }
+  .step-line { flex: 1; height: 2px; background: var(--border); margin: 0 4px; }
+  .step-dot.done .step-line, .step-dot.active .step-line { background: var(--crimson); }
+  .step-label { font-size: 11px; color: var(--light-text); text-align: center; margin-top: 6px; white-space: nowrap; }
+  .step-dot.active .step-label { color: var(--crimson); font-weight: 600; }
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+<div id="nav-container"></div>
+
+<div class="page-hero">
+  <div class="page-hero-content">
+    <div class="page-breadcrumb"><a href="index.html">Home</a> / Apply Now</div>
+    <div class="tag-badge">Cohort 4 — Applications Open</div>
+    <h1>Apply for the NRB Regulatory Sandbox</h1>
+    <p>Submit your application to participate in the NRB Regulatory Sandbox. Ensure you have read and understood the eligibility criteria and application requirements before applying.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="two-col" style="align-items:start;gap:60px">
+
+    <!-- LEFT: Form -->
+    <div style="grid-column:1 / span 1; max-width:100%">
+
+      <!-- Cohort Status -->
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:32px">
+        <div>
+          <div class="section-tag">Current Application Window</div>
+          <h2 class="section-title" style="margin-bottom:4px">Cohort 4 — 2026</h2>
+          <p style="font-size:13px;color:var(--mid)">Theme: Digital Payments &amp; Financial Inclusion</p>
+        </div>
+        <div>
+          <div class="status-badge">🟢 Applications Open — Closes 30 June 2026</div>
+        </div>
+      </div>
+
+      <!-- Step Indicator -->
+      <div style="background:var(--light);border-radius:8px;padding:24px 28px;margin-bottom:32px">
+        <p style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--mid);margin-bottom:16px">Application Process</p>
+        <div class="step-indicator">
+          <div class="step-dot active">
+            <div>
+              <div class="step-dot-inner">1</div>
+              <div class="step-label">Fill Form</div>
+            </div>
+            <div class="step-line"></div>
+          </div>
+          <div class="step-dot">
+            <div>
+              <div class="step-dot-inner">2</div>
+              <div class="step-label">Upload Docs</div>
+            </div>
+            <div class="step-line"></div>
+          </div>
+          <div class="step-dot">
+            <div>
+              <div class="step-dot-inner">3</div>
+              <div class="step-label">Review</div>
+            </div>
+            <div class="step-line"></div>
+          </div>
+          <div class="step-dot">
+            <div>
+              <div class="step-dot-inner">4</div>
+              <div class="step-label">Submit</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="apply-form-section" id="template">
+
+        <!-- SECTION 1: Applicant Info -->
+        <div class="form-section-title">1. Applicant Information</div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Organization Name <span>*</span></label>
+            <input type="text" placeholder="Legal name of your organization">
+          </div>
+          <div class="form-group">
+            <label>Organization Type <span>*</span></label>
+            <select>
+              <option value="">Select organization type</option>
+              <option>Licensed Bank (A-class)</option>
+              <option>Licensed Bank (B-class)</option>
+              <option>Licensed Bank (C-class)</option>
+              <option>Licensed Payment System Operator (PSO)</option>
+              <option>Licensed Payment Service Provider (PSP)</option>
+              <option>Licensed Remittance Company</option>
+              <option>New FinTech Company</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Registration Number <span>*</span></label>
+            <input type="text" placeholder="Company registration number">
+          </div>
+          <div class="form-group">
+            <label>Date of Incorporation <span>*</span></label>
+            <input type="date">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>PAN / VAT Number <span>*</span></label>
+            <input type="text" placeholder="Enter PAN or VAT number">
+          </div>
+          <div class="form-group">
+            <label>NRB License Number (if applicable)</label>
+            <input type="text" placeholder="Leave blank if not applicable">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Registered Office Address <span>*</span></label>
+          <input type="text" placeholder="Full registered office address in Nepal">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Website URL</label>
+            <input type="url" placeholder="https://www.yourcompany.com.np">
+          </div>
+          <div class="form-group">
+            <label>LinkedIn / Social Profile</label>
+            <input type="url" placeholder="Optional">
+          </div>
+        </div>
+
+        <!-- SECTION 2: Primary Contact -->
+        <div class="form-section-title">2. Primary Contact Person</div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Full Name <span>*</span></label>
+            <input type="text" placeholder="Full name of primary contact">
+          </div>
+          <div class="form-group">
+            <label>Designation <span>*</span></label>
+            <input type="text" placeholder="e.g. Chief Executive Officer">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Email Address <span>*</span></label>
+            <input type="email" placeholder="official@yourorganization.com">
+          </div>
+          <div class="form-group">
+            <label>Phone Number <span>*</span></label>
+            <input type="tel" placeholder="+977-XXXXXXXXXX">
+          </div>
+        </div>
+
+        <!-- SECTION 3: Product Details -->
+        <div class="form-section-title">3. Product / Service / Solution Details</div>
+
+        <div class="form-group">
+          <label>Name of Proposed Product / Service / Solution <span>*</span></label>
+          <input type="text" placeholder="Enter the name of your proposed innovation">
+        </div>
+
+        <div class="form-group">
+          <label>Category <span>*</span></label>
+          <select>
+            <option value="">Select the most relevant category</option>
+            <option>APIs and Open Banking</option>
+            <option>Mobile Money Services</option>
+            <option>Retail Payments</option>
+            <option>Money Transfer / Remittance</option>
+            <option>Digital KYC</option>
+            <option>Digital Identification</option>
+            <option>Digital Lending</option>
+            <option>Smart Contracts</option>
+            <option>Financial Inclusion Products</option>
+            <option>Cybersecurity Products</option>
+            <option>Embedded Finance</option>
+            <option>Regulatory Technology (RegTech)</option>
+            <option>Other (approved by NRB)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Problem Statement <span>*</span></label>
+          <textarea placeholder="Describe the problem your product, service, or solution intends to address (minimum 150 words)"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Description of the Innovation <span>*</span></label>
+          <textarea placeholder="Provide a detailed description of your proposed innovation, including how it works and what makes it genuinely new or innovative"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Financial Inclusion Impact <span>*</span></label>
+          <textarea placeholder="Explain how your product, service, or solution will enhance financial inclusion in Nepal"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Why is Sandbox Testing Necessary? <span>*</span></label>
+          <textarea placeholder="Describe why live testing in a controlled environment is necessary to achieve your testing objectives"></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Proposed Testing Period <span>*</span></label>
+            <select>
+              <option value="">Select duration</option>
+              <option>1 month</option>
+              <option>2 months</option>
+              <option>3 months</option>
+              <option>4 months</option>
+              <option>5 months</option>
+              <option>6 months (maximum)</option>
+            </select>
+            <p class="form-note">Maximum testing period is 6 months; extensions are granted only once.</p>
+          </div>
+          <div class="form-group">
+            <label>Target Number of Test Customers <span>*</span></label>
+            <input type="number" placeholder="e.g. 500">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Key Performance Indicators (KPIs) <span>*</span></label>
+          <textarea placeholder="List the KPIs that will determine the success of your test (e.g. number of transactions, customer satisfaction score, uptime %, etc.)"></textarea>
+        </div>
+
+        <!-- SECTION 4: Technical Readiness -->
+        <div class="form-section-title">4. Technical Readiness</div>
+
+        <div class="form-group">
+          <label>Technical Architecture Summary <span>*</span></label>
+          <textarea placeholder="Briefly describe the technology stack, architecture, and how the technology will be applied in this solution"></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Number of Full-time Technical Staff <span>*</span></label>
+            <input type="number" placeholder="Minimum 2 required" min="0">
+            <p class="form-note">At least 2 full-time technical staff (developers, cybersecurity experts) required.</p>
+          </div>
+          <div class="form-group">
+            <label>Project Manager Experience (years) <span>*</span></label>
+            <input type="number" placeholder="Minimum 2 years required" min="0">
+            <p class="form-note">Project Manager must have at least 2 years of FinTech/RegTech experience.</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Consumer Safeguards &amp; Risk Mitigation Measures <span>*</span></label>
+          <textarea placeholder="Describe the safeguards in place to protect customers during testing, including cybersecurity, data privacy, AML/CFT, and consumer protection measures"></textarea>
+        </div>
+
+        <!-- SECTION 5: Partnership -->
+        <div class="form-section-title">5. Partnership Information (if applicable)</div>
+
+        <div class="form-group">
+          <label>Licensed Partner Entity (if required)</label>
+          <input type="text" placeholder="Name of the licensed financial institution you are partnering with">
+          <p class="form-note">Required for FinTech companies whose solution requires a licensed entity to operate.</p>
+        </div>
+
+        <div class="form-group">
+          <label>Stage of Partnership Discussions</label>
+          <select>
+            <option value="">Select stage</option>
+            <option>Not Applicable</option>
+            <option>Initial Discussions</option>
+            <option>Non-Disclosure Agreement (NDA) Signed</option>
+            <option>Letter of Intent (LOI) Signed</option>
+            <option>Memorandum of Understanding (MOU) Signed</option>
+            <option>Formal Agreement Executed</option>
+          </select>
+        </div>
+
+        <!-- SECTION 6: Documents Upload -->
+        <div class="form-section-title">6. Document Upload</div>
+        <p style="font-size:13.5px;color:var(--mid);margin-bottom:20px">Upload all required documents. Accepted formats: PDF, DOC, DOCX, XLS, XLSX, CSV, PNG, JPG. Maximum 10MB per file.</p>
+
+        <div class="form-group">
+          <label>Company Registration Certificate <span>*</span></label>
+          <label class="upload-box">
+            <input type="file" accept=".pdf,.doc,.docx,.jpg,.png">
+            <div class="upload-icon">📎</div>
+            <p><strong>Click to upload</strong> or drag and drop<br>PDF, DOC, PNG, JPG (max 10MB)</p>
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label>NRB License / Registration Certificate (if applicable)</label>
+          <label class="upload-box">
+            <input type="file" accept=".pdf,.doc,.docx,.jpg,.png">
+            <div class="upload-icon">📎</div>
+            <p><strong>Click to upload</strong> or drag and drop<br>PDF, DOC, PNG, JPG (max 10MB)</p>
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label>Fit &amp; Proper Self-Disclosure Form <span>*</span></label>
+          <label class="upload-box">
+            <input type="file" accept=".pdf,.doc,.docx">
+            <div class="upload-icon">📎</div>
+            <p><strong>Click to upload</strong> completed self-disclosure form<br>PDF or DOC (max 10MB)</p>
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label>Detailed Application / Business Plan <span>*</span></label>
+          <label class="upload-box">
+            <input type="file" accept=".pdf,.doc,.docx">
+            <div class="upload-icon">📎</div>
+            <p><strong>Click to upload</strong> your full application document<br>PDF or DOC (max 10MB)</p>
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label>Technical Architecture Document <span>*</span></label>
+          <label class="upload-box">
+            <input type="file" accept=".pdf,.doc,.docx,.pptx">
+            <div class="upload-icon">📎</div>
+            <p><strong>Click to upload</strong> technical documentation<br>PDF, DOC, PPTX (max 10MB)</p>
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label>Partnership Evidence (LOI, MOU, NDA — if applicable)</label>
+          <label class="upload-box">
+            <input type="file" accept=".pdf,.doc,.docx" multiple>
+            <div class="upload-icon">📎</div>
+            <p><strong>Click to upload</strong> partnership documentation<br>Multiple files accepted (max 10MB each)</p>
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label>Additional Supporting Documents</label>
+          <label class="upload-box">
+            <input type="file" accept=".pdf,.doc,.docx,.xls,.xlsx,.csv,.png,.jpg" multiple>
+            <div class="upload-icon">📎</div>
+            <p><strong>Click to upload</strong> any other relevant documents<br>Multiple files accepted (max 10MB each)</p>
+          </label>
+        </div>
+
+        <!-- SECTION 7: Declarations -->
+        <div class="form-section-title">7. Declarations &amp; Acknowledgements</div>
+
+        <div class="form-group">
+          <div class="checkbox-group">
+            <input type="checkbox" id="decl1">
+            <label for="decl1">I confirm that all information, statements, documents, and attachments submitted in this application are true, complete, accurate, and not misleading in any material respect, to the best of my knowledge and belief.</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="checkbox-group">
+            <input type="checkbox" id="decl2">
+            <label for="decl2">I acknowledge and accept full legal responsibility and liability for any consequences arising from the submission of false, incorrect, or incomplete information.</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="checkbox-group">
+            <input type="checkbox" id="decl3">
+            <label for="decl3">I understand that acceptance into the Regulatory Sandbox does not guarantee a license to operate, nor permission to operate without regulatory oversight or supervision, and does not constitute a way to circumvent necessary regulatory approvals.</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="checkbox-group">
+            <input type="checkbox" id="decl4">
+            <label for="decl4">I have read and understood the <a href="policies.html#guidelines" style="color:var(--crimson);font-weight:600">Guidelines on the Regulatory Sandbox</a> and agree to comply with all conditions as may be specified by Nepal Rastra Bank.</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="checkbox-group">
+            <input type="checkbox" id="decl5">
+            <label for="decl5">I consent to NRB processing the information submitted in this application for the purposes of evaluating my Sandbox application.</label>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:14px;margin-top:32px;flex-wrap:wrap">
+          <button onclick="handleSubmit()" class="btn btn-primary" style="font-size:15px;padding:14px 36px">Submit Application →</button>
+          <button onclick="saveDraft()" class="btn btn-outline" style="font-size:14px;padding:14px 24px">Save as Draft</button>
+        </div>
+        <p class="form-note" style="margin-top:12px">By submitting, you confirm all declarations above. You will receive a confirmation email with your application reference number.</p>
+      </div>
+    </div>
+
+    <!-- RIGHT: Info Sidebar -->
+    <div style="display:flex;flex-direction:column;gap:20px;min-width:0">
+
+      <div class="highlight-box">
+        <h3>📅 Important Dates</h3>
+        <dl style="display:flex;flex-direction:column;gap:10px;margin-top:4px">
+          <div>
+            <dt style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--light-text)">Window Opens</dt>
+            <dd style="font-size:14px;font-weight:600;color:var(--dark)">1 May 2026</dd>
+          </div>
+          <div>
+            <dt style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--light-text)">Deadline</dt>
+            <dd style="font-size:14px;font-weight:600;color:var(--crimson)">30 June 2026</dd>
+          </div>
+          <div>
+            <dt style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--light-text)">Results Expected</dt>
+            <dd style="font-size:14px;font-weight:600;color:var(--dark)">August 2026</dd>
+          </div>
+          <div>
+            <dt style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--light-text)">Testing Begins</dt>
+            <dd style="font-size:14px;font-weight:600;color:var(--dark)">September 2026</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="highlight-box">
+        <h3>✅ Before You Apply</h3>
+        <ul>
+          <li>Read the <a href="policies.html#guidelines" style="color:var(--crimson)">Sandbox Guidelines</a> fully</li>
+          <li>Check <a href="framework.html#eligibility" style="color:var(--crimson)">Eligibility Criteria</a></li>
+          <li>Review <a href="framework.html#products" style="color:var(--crimson)">Permissible Products</a></li>
+          <li>Prepare all required documents</li>
+          <li>Ensure your team meets staffing requirements</li>
+          <li>Have partnership documentation ready (if applicable)</li>
+        </ul>
+      </div>
+
+      <div class="highlight-box">
+        <h3>📥 Download Templates</h3>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-top:4px">
+          <a href="#" class="download-btn" style="justify-content:center">⬇ Application Form Template</a>
+          <a href="#" class="download-btn" style="justify-content:center">⬇ Self-Disclosure Form</a>
+          <a href="#" class="download-btn" style="justify-content:center">⬇ Testing Plan Template</a>
+          <a href="#" class="download-btn" style="justify-content:center">⬇ KPI Framework Template</a>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <h3>❓ Need Help?</h3>
+        <p style="font-size:13.5px;color:var(--mid);margin-top:4px">For questions about eligibility, the application process, or technical requirements, contact the Sandbox Support Team:</p>
+        <dl style="margin-top:12px;display:flex;flex-direction:column;gap:8px">
+          <div>
+            <dt style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--light-text)">Email</dt>
+            <dd style="font-size:13.5px;color:var(--crimson);font-weight:600">sandbox@nrb.org.np</dd>
+          </div>
+          <div>
+            <dt style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--light-text)">Innovation Support</dt>
+            <dd style="font-size:13.5px;color:var(--crimson);font-weight:600">fintech@nrb.org.np</dd>
+          </div>
+          <div>
+            <dt style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--light-text)">Phone</dt>
+            <dd style="font-size:13.5px;color:var(--dark)">+977-1-4419804</dd>
+          </div>
+        </dl>
+        <div style="margin-top:16px">
+          <a href="events.html#workshops" class="btn btn-outline" style="width:100%;justify-content:center;font-size:13px">Attend a Workshop</a>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <p><strong>Application Window:</strong> Applications are accepted only during officially announced cohort windows. Submissions outside this window will not be considered.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div id="footer-container"></div>
+<script src="assets/shared.js"></script>
+<script src="assets/dynamic.js"></script>
+<script>
+initPage('nav-apply');
+
+// Upload boxes: show filename on selection
+document.querySelectorAll('.upload-box input[type="file"]').forEach(input => {
+  input.addEventListener('change', function() {
+    const box = this.closest('.upload-box');
+    const names = Array.from(this.files).map(f => f.name).join(', ');
+    if (names) {
+      box.querySelector('p').innerHTML = `<strong style="color:var(--crimson)">✓ ${names}</strong>`;
+    }
+  });
+});
+
+function handleSubmit() {
+  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  const allChecked = Array.from(checkboxes).every(c => c.checked);
+  if (!allChecked) {
+    alert('Please confirm all declarations before submitting your application.');
+    return;
+  }
+  // Show success message
+  const form = document.querySelector('.apply-form-section');
+  form.innerHTML = `
+    <div style="text-align:center;padding:60px 40px">
+      <div style="font-size:56px;margin-bottom:20px">✅</div>
+      <h2 style="font-family:'Playfair Display',serif;font-size:26px;color:var(--dark);margin-bottom:12px">Application Submitted Successfully!</h2>
+      <p style="font-size:15px;color:var(--mid);max-width:480px;margin:0 auto 24px;line-height:1.7">Your application has been received. A confirmation email with your reference number will be sent shortly. The NRB Sandbox team will review your application and contact you within the announced timeline.</p>
+      <div style="background:var(--light);border-radius:6px;padding:18px 24px;display:inline-block;margin-bottom:32px">
+        <p style="font-size:12px;color:var(--mid);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Reference Number</p>
+        <p style="font-size:20px;font-weight:700;color:var(--crimson);font-family:'Playfair Display',serif">NRB-SB-2026-${Math.floor(Math.random()*9000)+1000}</p>
+      </div>
+      <br>
+      <a href="index.html" class="btn btn-primary">Return to Homepage →</a>
+    </div>
+  `;
+}
+
+function saveDraft() {
+  showToast('Draft saved successfully! Return anytime before 30 June 2026.', 'success');
+  alert('Your draft has been saved. You can return to complete and submit your application before 30 June 2026.');
+}
+</script>
+</body>
+</html>
+<script>
+// Ripple on all buttons
+document.addEventListener('click', function(e){
+  const btn = e.target.closest('.btn, button');
+  if(!btn || btn.type==='file') return;
+  const r = document.createElement('span');
+  r.className = 'ripple';
+  const rect = btn.getBoundingClientRect();
+  const size = Math.max(rect.width, rect.height);
+  r.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX-rect.left-size/2}px;top:${e.clientY-rect.top-size/2}px;`;
+  btn.appendChild(r);
+  setTimeout(()=>r.remove(), 600);
+});
+
+// Show required field toast on empty submit attempt
+const submitBtn = document.querySelector('button[onclick="handleSubmit()"]');
+if(submitBtn){
+  submitBtn.addEventListener('mouseenter', function(){
+    const empty = [...document.querySelectorAll('input[type="text"][placeholder], select')].filter(el=>!el.value && el.closest('.form-group label span'));
+    // just a hover hint
+  });
+}
+
+// Real-time character count on textareas
+document.querySelectorAll('textarea').forEach(ta => {
+  const count = document.createElement('div');
+  count.style.cssText = 'font-size:11px;color:#aaa;text-align:right;margin-top:4px;';
+  ta.parentNode.appendChild(count);
+  function update(){ count.textContent = ta.value.length + ' characters'; }
+  ta.addEventListener('input', update);
+  update();
+});
+</script>

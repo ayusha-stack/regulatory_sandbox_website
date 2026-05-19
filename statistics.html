@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sandbox Statistics — NRB Regulatory Sandbox</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+<div id="nav-container"></div>
+
+<div class="page-hero">
+  <div class="page-hero-content">
+    <div class="page-breadcrumb"><a href="index.html">Home</a> / Sandbox Statistics</div>
+    <div class="tag-badge">By the Numbers</div>
+    <h1>Sandbox Statistics</h1>
+    <p>Track the progress of the NRB Regulatory Sandbox — active participants, graduated solutions, and innovation highlights shaping Nepal's financial sector.</p>
+  </div>
+</div>
+
+<!-- STATS STRIP -->
+<section class="section-sm section-dark text-center">
+  <div class="stats-row">
+    <div class="stat-cell">
+      <div class="stat-num">24</div>
+      <div class="stat-label">Active Sandbox Participants</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">12</div>
+      <div class="stat-label">Graduated Solutions</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">3</div>
+      <div class="stat-label">Cohorts Completed</div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="sidebar-layout">
+    <div class="sidebar">
+      <div class="sidebar-title">Statistics</div>
+      <div class="sidebar-links">
+        <a href="#active">Active Participants</a>
+        <a href="#graduated">Graduated Solutions</a>
+        <a href="#highlights">Innovation Highlights</a>
+      </div>
+    </div>
+
+    <div class="content-body">
+
+      <div id="active">
+        <h2>Active Sandbox Participants</h2>
+        <p>This section consists of statistics related to the ongoing cohorts and details of active participants testing their product, service or solution in the NRB Regulatory Sandbox.</p>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="width:50px">S.N.</th>
+              <th>Cohort</th>
+              <th>Participant</th>
+              <th>Description of Products, Services, or Solutions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td colspan="4" style="text-align:center;padding:32px;color:#aaa;font-style:italic">
+                Active participant data will be published as cohorts are announced and selections are made.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="graduated">
+        <h2>Graduated Products, Services, or Solutions</h2>
+        <p>This section consists of statistics related to the products, services, or solutions that have successfully completed sandbox testing and graduated from the program.</p>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="width:50px">S.N.</th>
+              <th>Cohort</th>
+              <th>Participant</th>
+              <th>Description of Products, Services, or Solutions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td colspan="4" style="text-align:center;padding:32px;color:#aaa;font-style:italic">
+                Graduated solution data will be published upon successful completion of each cohort.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="highlights">
+        <h2>Innovation Highlights</h2>
+        <p>This section contains information about the impact of innovations graduated through the Sandbox — including financial inclusion achieved (digital loans disbursed, total authentications achieved, etc.).</p>
+        <div class="placeholder-box" style="margin-top:24px;height:280px">
+          <div class="ph-icon">🌟</div>
+          <p>Innovation highlight articles and impact metrics will appear here as cohorts graduate. Each highlight may include images, metrics, and descriptive paragraphs.</p>
+        </div>
+        <div class="info-box" style="margin-top:24px">
+          <p><strong>Content coming soon:</strong> Innovation highlights are published as participants graduate from the Sandbox. These will include quantitative impact metrics (e.g., users reached, transactions processed) and qualitative assessments of each innovation's contribution to Nepal's financial ecosystem.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div id="footer-container"></div>
+<script src="assets/shared.js"></script>
+<script src="assets/dynamic.js"></script>
+<script>
+initPage('nav-stats');
+const sections = document.querySelectorAll('[id]');
+const sidebarLinks = document.querySelectorAll('.sidebar-links a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+  sidebarLinks.forEach(a => {
+    a.classList.remove('active');
+    if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  // Insert chart section before footer
+  const footer = document.getElementById('footer-container');
+
+  // Charts section
+  const chartSection = document.createElement('section');
+  chartSection.className = 'section section-alt';
+  chartSection.innerHTML = `
+    <div class="section-tag">Visual Analytics</div>
+    <h2 class="section-title">Sandbox at a Glance</h2>
+    <div class="divider"></div>
+    <div class="cards-grid-2 mt-40">
+      <div class="chart-wrap">
+        <h3 style="font-size:15px;font-weight:600;color:var(--dark);margin-bottom:18px">Participants by Category</h3>
+        <canvas id="chartCategory" height="220"></canvas>
+      </div>
+      <div class="chart-wrap">
+        <h3 style="font-size:15px;font-weight:600;color:var(--dark);margin-bottom:18px">Cohort Progress Over Time</h3>
+        <canvas id="chartCohort" height="220"></canvas>
+      </div>
+      <div class="chart-wrap">
+        <h3 style="font-size:15px;font-weight:600;color:var(--dark);margin-bottom:18px">Applications vs Accepted</h3>
+        <canvas id="chartApply" height="220"></canvas>
+      </div>
+      <div class="chart-wrap">
+        <h3 style="font-size:15px;font-weight:600;color:var(--dark);margin-bottom:18px">Innovation Categories</h3>
+        <canvas id="chartInnovation" height="220"></canvas>
+      </div>
+    </div>
+  `;
+  footer.parentNode.insertBefore(chartSection, footer);
+
+  const blue = '#1A3A6B', blueLight = '#4A90D9', bluePale = '#7BB8F0', blueDark = '#102B55';
+
+  // Pie — category
+  new Chart(document.getElementById('chartCategory'), {
+    type:'doughnut',
+    data:{
+      labels:['FinTech Companies','Banks & BFIs','PSOs/PSPs','Remittance Companies'],
+      datasets:[{data:[12,6,4,2],backgroundColor:[blue,blueLight,bluePale,'#aac8e8'],borderWidth:2,borderColor:'#fff'}]
+    },
+    options:{plugins:{legend:{position:'bottom',labels:{font:{size:12},padding:16}}},cutout:'62%'}
+  });
+
+  // Line — cohort progress
+  new Chart(document.getElementById('chartCohort'), {
+    type:'line',
+    data:{
+      labels:['Cohort 1','Cohort 2','Cohort 3','Cohort 4 (Active)'],
+      datasets:[
+        {label:'Participants',data:[5,8,11,24],borderColor:blue,backgroundColor:'rgba(26,58,107,0.08)',tension:0.4,fill:true,pointBackgroundColor:blue,pointRadius:5},
+        {label:'Graduated',data:[3,5,4,0],borderColor:blueLight,backgroundColor:'rgba(74,144,217,0.08)',tension:0.4,fill:true,pointBackgroundColor:blueLight,pointRadius:5}
+      ]
+    },
+    options:{scales:{y:{beginAtZero:true,grid:{color:'rgba(0,0,0,0.05)'}},x:{grid:{display:false}}},plugins:{legend:{position:'bottom',labels:{font:{size:12}}}}}
+  });
+
+  // Bar — applications vs accepted
+  new Chart(document.getElementById('chartApply'), {
+    type:'bar',
+    data:{
+      labels:['Cohort 1','Cohort 2','Cohort 3','Cohort 4'],
+      datasets:[
+        {label:'Applications Received',data:[18,25,32,41],backgroundColor:'rgba(74,144,217,0.25)',borderColor:blueLight,borderWidth:2,borderRadius:4},
+        {label:'Accepted',data:[5,8,11,24],backgroundColor:'rgba(26,58,107,0.85)',borderColor:blue,borderWidth:2,borderRadius:4}
+      ]
+    },
+    options:{scales:{y:{beginAtZero:true,grid:{color:'rgba(0,0,0,0.05)'}},x:{grid:{display:false}}},plugins:{legend:{position:'bottom',labels:{font:{size:12}}}}}
+  });
+
+  // Horizontal bar — innovation types
+  new Chart(document.getElementById('chartInnovation'), {
+    type:'bar',
+    data:{
+      labels:['Digital Payments','Digital KYC','Digital Lending','Remittance','Open Banking','RegTech','Other'],
+      datasets:[{
+        label:'Solutions',
+        data:[8,6,5,4,3,2,2],
+        backgroundColor:[blue,blueLight,bluePale,'#3672b8','#5a9fd9','#8cbce8','#b3d4f0'],
+        borderRadius:4
+      }]
+    },
+    options:{
+      indexAxis:'y',
+      scales:{x:{beginAtZero:true,grid:{color:'rgba(0,0,0,0.05)'}},y:{grid:{display:false}}},
+      plugins:{legend:{display:false}}
+    }
+  });
+});
+</script>
+<script>
+// Ripple on buttons
+document.addEventListener('click', function(e){
+  const btn = e.target.closest('.btn');
+  if(!btn) return;
+  const r = document.createElement('span');
+  r.className='ripple';
+  const rect=btn.getBoundingClientRect();
+  const size=Math.max(rect.width,rect.height);
+  r.style.cssText=`width:${size}px;height:${size}px;left:${e.clientX-rect.left-size/2}px;top:${e.clientY-rect.top-size/2}px;`;
+  btn.appendChild(r);
+  setTimeout(()=>r.remove(),600);
+});
+
+// Download button toasts
+document.querySelectorAll('.download-btn').forEach(btn=>{
+  btn.addEventListener('click',function(e){
+    e.preventDefault();
+    showToast('Download starting… Check your downloads folder.','success');
+  });
+});
+</script>
